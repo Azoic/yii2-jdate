@@ -172,6 +172,7 @@ class DateTime extends \yii\base\Component
 
     public function toGregorianDate($Date, $mod = '/')
     {
+        if($Date === null) return null;
         list($jy, $jm, $jd) = explode('/', $Date);
         if ($jy > 979) {
             $gy = 1600;
@@ -198,7 +199,13 @@ class DateTime extends \yii\base\Component
             if ($gd <= $v) break;
             $gd -= $v;
         }
+        $gm = $gm > 9 ?: '0'.$gm;
         return ($mod == '') ? [$gy, $gm, $gd] : $gy . $mod . $gm . $mod . $gd;
+    }
+
+    public function toTimestamp($date)
+    {
+        return strtotime($date);
     }
 
     public function div($a, $b)
